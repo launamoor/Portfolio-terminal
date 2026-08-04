@@ -21,7 +21,9 @@ export type DesktopIconItem = LucideIconItem | ImageIconItem;
 export type DesktopStore = {
   desktopIcons: DesktopIconItem[];
   selectedIconId: string | null;
+  highlightedIconId: string | null;
   selectIcon: (id: string | null) => void;
+  highlightIcon: (id: string | null) => void;
 };
 
 export const useDesktopStore = create<DesktopStore>((set) => ({
@@ -53,7 +55,16 @@ export const useDesktopStore = create<DesktopStore>((set) => ({
       alt: "Tibia Icon",
       text: "Tibia",
     },
+    {
+      id: "winamp",
+      type: "image",
+      src: "/assets/winamp.png",
+      alt: "Winamp Icon",
+      text: "Winamp",
+    },
   ],
   selectedIconId: null,
+  highlightedIconId: null,
   selectIcon: (id) => set({ selectedIconId: id }),
+  highlightIcon: (id) => set({ highlightedIconId: id }),
 }));
