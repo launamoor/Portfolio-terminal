@@ -29,8 +29,8 @@ export default function DesktopIcon({
       style={{ padding: "4px 0 2px 0" }}
       className={clsx(
         "flex flex-col items-center justify-center text-sm gap-2 select-none",
-        hovered && "bg-blue-500/10 outline outline-1 outline-blue-400/50",
-        selected && "bg-blue-500/30 outline outline-1 outline-blue-400",
+        hovered && "bg-[#222] outline-1 outline-[#99999940] rounded-sm",
+        selected && "bg-[#333] outline-1 outline-[#99999940] rounded-sm",
       )}
     >
       <div>

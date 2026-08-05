@@ -14,13 +14,15 @@ export default function Desktop() {
     highlightedIconId,
   } = useDesktopStore();
 
+  const customToastId: string = "toast-desktop"; // prevents toast duplication
+
   const onDoubleClick = () => {
-    toast("We're not here for it, are we? 😉");
+    toast("We're not here for it, are we? 😉", { toastId: customToastId });
   };
   return (
     <div
       style={{
-        backgroundImage: `url(https://images.unsplash.com/photo-1485470733090-0aae1788d5af)`,
+        backgroundImage: `url(/assets/wallpaper.jpg)`,
       }}
       className="h-screen relative bg-center bg-no-repeat bg-cover"
       onClick={() => {
@@ -30,7 +32,7 @@ export default function Desktop() {
     >
       <div
         style={{ paddingTop: "20px", marginLeft: "20px" }}
-        className="flex flex-col gap-6 max-w-[85px]"
+        className="flex flex-col gap-6 max-w-21.25" // max-w-[85px] - eslint complaints
       >
         {desktopIcons.map((icon) => (
           <DesktopIcon

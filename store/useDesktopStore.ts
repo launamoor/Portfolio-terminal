@@ -16,10 +16,18 @@ type ImageIconItem = {
   text: string;
 };
 
+export type TaskbarIconItem = {
+  id: string;
+  src: string;
+  alt: string;
+  title: string;
+};
+
 export type DesktopIconItem = LucideIconItem | ImageIconItem;
 
 export type DesktopStore = {
   desktopIcons: DesktopIconItem[];
+  taskbarIcons: TaskbarIconItem[];
   selectedIconId: string | null;
   highlightedIconId: string | null;
   selectIcon: (id: string | null) => void;
@@ -61,6 +69,26 @@ export const useDesktopStore = create<DesktopStore>((set) => ({
       src: "/assets/winamp.png",
       alt: "Winamp Icon",
       text: "Winamp",
+    },
+  ],
+  taskbarIcons: [
+    {
+      id: "duckduckgo",
+      src: "/assets/duckduckgo.png",
+      alt: "DuckDuckGo Icon",
+      title: "DuckDuckGo",
+    },
+    {
+      id: "teams",
+      src: "/assets/teams.png",
+      alt: "Teams Icon",
+      title: "Teams",
+    },
+    {
+      id: "terminal",
+      src: "/assets/terminal.png",
+      alt: "Terminal Icon",
+      title: "Terminal",
     },
   ],
   selectedIconId: null,
