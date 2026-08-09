@@ -4,6 +4,7 @@ import Taskbar from "./Taskbar";
 import DesktopIcon from "./DesktopIcon";
 import { useDesktopStore } from "@/store/useDesktopStore";
 import { toast } from "react-toastify";
+import Calendar from "./Calendar";
 
 export default function Desktop() {
   const {
@@ -12,6 +13,8 @@ export default function Desktop() {
     selectIcon,
     highlightIcon,
     highlightedIconId,
+    hideCalendar,
+    calendarOpened,
   } = useDesktopStore();
 
   const customToastId: string = "toast-desktop"; // prevents toast duplication
@@ -24,10 +27,13 @@ export default function Desktop() {
       style={{
         backgroundImage: `url(/assets/wallpaper.jpg)`,
       }}
-      className="h-screen relative bg-center bg-no-repeat bg-cover"
-      onClick={() => {
+      className="h-screen relative bg-center bg-no-repeat bg-cover overflow-hidden"
+      id="desktop"
+      onClick={(e) => {
         selectIcon(null);
         highlightIcon(null);
+        if (calendarOpened && (e.target as HTMLElement).id === "desktop")
+          hideCalendar();
       }}
     >
       <div
@@ -58,6 +64,7 @@ export default function Desktop() {
           />
         ))}
       </div>
+      <Calendar />
       <Taskbar />
     </div>
   );

@@ -30,8 +30,11 @@ export type DesktopStore = {
   taskbarIcons: TaskbarIconItem[];
   selectedIconId: string | null;
   highlightedIconId: string | null;
+  calendarOpened: boolean;
   selectIcon: (id: string | null) => void;
   highlightIcon: (id: string | null) => void;
+  toggleCalendar: () => void;
+  hideCalendar: () => void;
 };
 
 export const useDesktopStore = create<DesktopStore>((set) => ({
@@ -95,4 +98,8 @@ export const useDesktopStore = create<DesktopStore>((set) => ({
   highlightedIconId: null,
   selectIcon: (id) => set({ selectedIconId: id }),
   highlightIcon: (id) => set({ highlightedIconId: id }),
+  calendarOpened: false,
+  toggleCalendar: () =>
+    set((state) => ({ calendarOpened: !state.calendarOpened })),
+  hideCalendar: () => set({ calendarOpened: false }),
 }));

@@ -28,7 +28,7 @@ export default function TaskbarIcon({
       onMouseLeave={onMouseLeave}
     >
       {item.id === "teams" ? (
-        <div className="w-[12px] h-[12px] bg-red-700 rounded-full absolute bottom-2.5 right-1.5"></div>
+        <div className="w-[12px] h-[12px] bg-red-700 rounded-full absolute top-1.5 right-1.5"></div>
       ) : null}
       <Image src={item.src} alt={item.alt} width={32} height={32} />
       <div className="h-1 bg-[#999] rounded-full w-1/6"></div>

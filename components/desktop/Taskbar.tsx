@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import TaskbarWeather from "./TaskbarWeather";
 import TaskbarDateTime from "./TaskbarDateTime";
 
+export const TASKBAR_HEIGHT = 56;
+
 function StartButton() {
   return (
     <button className="h-3/4 min-w-3 aspect-square rounded-full flex items-center justify-center bg-[#222] hover:bg-[#333] active:bg-[#444] transition-all duration-100 ease-in">
@@ -16,7 +18,7 @@ function SearchBar() {
   return (
     <input
       className="h-3/4 w-62.5 bg-[#222] bg-radial from-[#292929] to-[#191919] p-2 text-sm rounded-4xl text-center"
-      placeholder={"🚫 Search 🔎"}
+      placeholder={"Search 🔎"}
       type="text"
       disabled
     />
@@ -33,7 +35,10 @@ export default function Taskbar() {
     toast("We're not here for it, are we? 😉", { toastId: customToastId });
   };
   return (
-    <div className="absolute bottom-0 left-0 bg-[#00000030] w-full h-14 backdrop-blur-lg border-t border-[#222]">
+    <div
+      style={{ height: TASKBAR_HEIGHT }}
+      className="absolute bottom-0 left-0 bg-[#00000030] w-full backdrop-blur-lg border-t border-[#222]"
+    >
       <div className="flex items-center justify-between h-full">
         <div className="flex items-center justify-center gap-4 h-full ml-4">
           <StartButton />
