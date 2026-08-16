@@ -5,6 +5,7 @@ import DesktopIcon from "./DesktopIcon";
 import { useDesktopStore } from "@/store/useDesktopStore";
 import { toast } from "react-toastify";
 import Calendar from "./Calendar";
+import Terminal from "../terminal/Terminal";
 
 export default function Desktop() {
   const {
@@ -64,6 +65,7 @@ export default function Desktop() {
           />
         ))}
       </div>
+      <Terminal />
       <Calendar />
       <Taskbar />
     </div>

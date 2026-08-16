@@ -120,24 +120,37 @@ export default function Calendar() {
           ))}
 
           {/* Previous month's days */}
-          {generatePreviousMonthDays().map((day) => (
-            <div className="text-[#666] px-2 py-1">{day}</div>
+          {generatePreviousMonthDays().map((day, i) => (
+            <div key={`prevMonthDay: ${i}`} className="text-[#666] px-2 py-1">
+              {day}
+            </div>
           ))}
 
           {/* Current month's days */}
-          {currentMonthsDays.map((day) => {
+          {currentMonthsDays.map((day, i) => {
             if (day === CURRENT_DAY) {
               return (
-                <div className="bg-[#666] px-2 py-1 rounded-lg">{day}</div>
+                <div
+                  key={`currMonthDay: ${i}`}
+                  className="bg-[#666] px-2 py-1 rounded-lg"
+                >
+                  {day}
+                </div>
               );
             } else {
-              return <div className="px-2 py-1">{day}</div>;
+              return (
+                <div key={`currMonthDay: ${i}`} className="px-2 py-1">
+                  {day}
+                </div>
+              );
             }
           })}
 
           {/* Next month's days */}
-          {nextMonthDaysToDisplay.map((day) => (
-            <div className="text-[#666] px-2 py-1">{day}</div>
+          {nextMonthDaysToDisplay.map((day, i) => (
+            <div key={`nextMonthDay: ${i}`} className="text-[#666] px-2 py-1">
+              {day}
+            </div>
           ))}
         </div>
       </div>
