@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { TASKBAR_HEIGHT } from "./Taskbar";
 import { X } from "lucide-react";
 import { useDesktopStore } from "@/store/useDesktopStore";
@@ -28,17 +31,9 @@ const MONTHS: string[] = [
   "December",
 ];
 
-const CURRENT_DAY_NUMBER: number = new Date().getDay();
-const CURRENT_DAY: number = new Date().getDate();
-const CURRENT_MONTH: number = new Date().getMonth();
-const CURRENT_YEAR: number = new Date().getFullYear();
+type MonthType = "current" | "previous";
 
-//////////////////////////// Number of days in month getter ↓
-
-type monthType = "current" | "previous";
-
-function getNumberOfDaysInMonth(month: monthType): number {
-  const now: Date = new Date();
+function getNumberOfDaysInMonth(now: Date, month: MonthType): number {
   const daysInMonth: number = new Date(
     now.getFullYear(),
     month === "current" ? now.getMonth() + 1 : now.getMonth(),
@@ -48,16 +43,16 @@ function getNumberOfDaysInMonth(month: monthType): number {
   return daysInMonth;
 }
 
-///////////////////////////// Number of previous month's days getter ↓
-
-const now: Date = new Date();
-
-const monthStartDate = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
-
-function generatePreviousMonthDays(): number[] {
+function generatePreviousMonthDays(now: Date): number[] {
   const previousMonthDays: number[] = [];
-  const numberOfDays: number = getNumberOfDaysInMonth("previous");
+  const numberOfDays: number = getNumberOfDaysInMonth(now, "previous");
+  const monthStartDate = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    1,
+  ).getDay();
   const leadingDays = (monthStartDate + 6) % 7;
+
   for (let i = 0; i < leadingDays; i++) {
     previousMonthDays.push(numberOfDays - i);
   }
@@ -65,30 +60,37 @@ function generatePreviousMonthDays(): number[] {
   return previousMonthDays.reverse();
 }
 
-///////////////////////////// Number of current month's days getter ↓
-
-const currentMonthsDays: number[] = Array.from(
-  { length: getNumberOfDaysInMonth("current") },
-  (_, i) => i + 1,
-);
-
-///////////////////////////// Last day of the month getter ↓
-
-const monthLastDay = new Date(
-  now.getFullYear(),
-  now.getMonth(),
-  getNumberOfDaysInMonth("current"),
-).getDay();
-
-const nextMonthDaysToDisplay: number[] = Array.from(
-  { length: 7 - monthLastDay },
-  (_, i) => i + 1,
-);
-
-//////////////////////////
-
 export default function Calendar() {
   const { calendarOpened, toggleCalendar } = useDesktopStore();
+  const [now, setNow] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setNow(new Date());
+  }, []);
+
+  if (!now) return null;
+
+  const CURRENT_DAY_NUMBER = now.getDay();
+  const CURRENT_DAY = now.getDate();
+  const CURRENT_MONTH = now.getMonth();
+  const CURRENT_YEAR = now.getFullYear();
+
+  const currentMonthsDays: number[] = Array.from(
+    { length: getNumberOfDaysInMonth(now, "current") },
+    (_, i) => i + 1,
+  );
+
+  const monthLastDay = new Date(
+    CURRENT_YEAR,
+    CURRENT_MONTH,
+    getNumberOfDaysInMonth(now, "current"),
+  ).getDay();
+
+  const nextMonthDaysToDisplay: number[] = Array.from(
+    { length: 7 - monthLastDay },
+    (_, i) => i + 1,
+  );
+
   return (
     <div
       style={{
@@ -112,21 +114,18 @@ export default function Calendar() {
       <div className="p-4 flex flex-col gap-6">
         <div>{`${MONTHS[CURRENT_MONTH]} ${CURRENT_YEAR}`}</div>
         <div className="grid grid-cols-7 grid-rows-7 text-sm gap-2 justify-items-center select-none">
-          {/* Weekday labels */}
           {WEEKDAYS_SHORT.map((day, i) => (
             <div className="text-sm px-2 py-1" key={i}>
               {day}
             </div>
           ))}
 
-          {/* Previous month's days */}
-          {generatePreviousMonthDays().map((day, i) => (
+          {generatePreviousMonthDays(now).map((day, i) => (
             <div key={`prevMonthDay: ${i}`} className="text-[#666] px-2 py-1">
               {day}
             </div>
           ))}
 
-          {/* Current month's days */}
           {currentMonthsDays.map((day, i) => {
             if (day === CURRENT_DAY) {
               return (
@@ -137,16 +136,14 @@ export default function Calendar() {
                   {day}
                 </div>
               );
-            } else {
-              return (
-                <div key={`currMonthDay: ${i}`} className="px-2 py-1">
-                  {day}
-                </div>
-              );
             }
+            return (
+              <div key={`currMonthDay: ${i}`} className="px-2 py-1">
+                {day}
+              </div>
+            );
           })}
 
-          {/* Next month's days */}
           {nextMonthDaysToDisplay.map((day, i) => (
             <div key={`nextMonthDay: ${i}`} className="text-[#666] px-2 py-1">
               {day}

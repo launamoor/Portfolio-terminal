@@ -8,6 +8,6 @@ type PhaseStore = {
 };
 
 export const usePhaseStore = create<PhaseStore>((set) => ({
-  step: "bootup",
+  step: "desktop",
   setStep: (step) => set({ step: step }),
 }));
