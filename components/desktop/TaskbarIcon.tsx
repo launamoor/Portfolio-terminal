@@ -31,7 +31,9 @@ export default function TaskbarIcon({
         <div className="w-3 h-3 bg-red-700 rounded-full absolute top-1.5 right-1.5"></div>
       ) : null}
       <Image src={item.src} alt={item.alt} width={32} height={32} />
-      <div className="h-1 bg-[#999] rounded-full w-1/6"></div>
+      {item.id === "terminal" ? (
+        <div className="h-1 bg-[#999] rounded-full w-1/6"></div>
+      ) : null}
     </button>
   );
 }

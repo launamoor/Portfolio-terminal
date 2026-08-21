@@ -1,10 +1,10 @@
-import Desktop from "@/components/desktop/Desktop";
+import AppShell from "@/components/AppShell";
 
 export default function Home() {
   return (
     <div>
       <main>
-        <Desktop />
+        <AppShell />
       </main>
     </div>
   );
