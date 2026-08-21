@@ -78,3 +78,17 @@ svg {
 .font-mono-terminal {
   font-family: var(--font-mono), monospace;
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1000ms ease;
+}

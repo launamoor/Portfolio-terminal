@@ -1,9 +1,13 @@
 import { create } from "zustand";
 
+type Phase = "bootup" | "loadingOS" | "desktop";
+
 type PhaseStore = {
-  step: "bootup" | "loadingOS" | "desktop";
+  step: Phase;
+  setStep: (step: Phase) => void;
 };
 
 export const usePhaseStore = create<PhaseStore>((set) => ({
-  step: "loadingOS",
+  step: "bootup",
+  setStep: (step) => set({ step: step }),
 }));

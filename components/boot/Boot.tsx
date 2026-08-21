@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import BootLine from "./BootLine";
+import { usePhaseStore } from "@/store/usePhaseStore";
 
 export type BootLine = {
   id: string;
@@ -11,6 +12,8 @@ export type BootLine = {
 
 export default function Boot() {
   const [visibleLines, setVisibleLines] = useState<BootLine[]>([]);
+
+  const { setStep } = usePhaseStore();
 
   const loadingLines = [
     { id: "1", text: "Initializing kernel", delay: 0, loaded: false },
@@ -53,6 +56,10 @@ export default function Boot() {
     loaded: false,
   }));
 
+  const cumulativeDelay: number = loadingLines
+    .map((line) => line.delay)
+    .reduce((acc, curr) => curr + acc);
+
   const LAST_LINE_FLIP_DELAY = 300;
 
   useEffect(() => {
@@ -84,6 +91,10 @@ export default function Boot() {
       }, line.delay);
       timeoutIds.push(revealId);
     });
+
+    const phaseSwitch = setTimeout(() => {
+      setStep("loadingOS");
+    }, cumulativeDelay + 2000);
 
     return () => timeoutIds.forEach((id) => clearTimeout(id));
   }, []);
