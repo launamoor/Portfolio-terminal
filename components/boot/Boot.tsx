@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import BootLine from "./BootLine";
 import { usePhaseStore } from "@/store/usePhaseStore";
+import LoadingSkipInfobox from "./LoadingSkipInfobox";
 
 export type BootLine = {
   id: string;
@@ -96,6 +97,8 @@ export default function Boot() {
       setStep("loadingOS");
     }, cumulativeDelay + 2000);
 
+    timeoutIds.push(phaseSwitch);
+
     return () => timeoutIds.forEach((id) => clearTimeout(id));
   }, []);
 
@@ -114,6 +117,7 @@ export default function Boot() {
           />
         );
       })}
+      <LoadingSkipInfobox />
     </div>
   );
 }
